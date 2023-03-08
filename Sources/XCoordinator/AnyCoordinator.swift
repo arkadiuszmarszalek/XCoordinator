@@ -34,6 +34,7 @@ public class AnyCoordinator<RouteType: Route, TransitionType: TransitionProtocol
     private let _prepareTransition: (RouteType) -> TransitionType
     private let _viewController: () -> UIViewController?
     private let _rootViewController: () -> TransitionType.RootViewController
+    private let _children: () -> [Presentable]
     private let _presented: (Presentable?) -> Void
     private let _setRoot: (UIWindow) -> Void
     private let _addChild: (Presentable) -> Void
@@ -55,6 +56,7 @@ public class AnyCoordinator<RouteType: Route, TransitionType: TransitionProtocol
         self._prepareTransition = coordinator.prepareTransition
         self._viewController = { coordinator.viewController }
         self._rootViewController = { coordinator.rootViewController }
+        self._children = { coordinator.children }
         self._presented = coordinator.presented
         self._setRoot = coordinator.setRoot
         self._addChild = coordinator.addChild
@@ -64,6 +66,10 @@ public class AnyCoordinator<RouteType: Route, TransitionType: TransitionProtocol
     }
 
     // MARK: Computed properties
+    
+    public var children: [Presentable] {
+        _children()
+    }
 
     public var rootViewController: TransitionType.RootViewController {
         _rootViewController()

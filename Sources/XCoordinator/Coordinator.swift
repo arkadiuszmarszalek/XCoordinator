@@ -22,6 +22,7 @@ public typealias ContextPresentationHandler = (TransitionContext) -> Void
 ///
 public protocol Coordinator: Router, TransitionPerformer {
 
+    var children: [Presentable] { get }
     ///
     /// This method prepares transitions for routes.
     /// It especially decides, which transitions are performed for the triggered routes.
